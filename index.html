@@ -377,8 +377,10 @@
   }
   .gallery-scroll::-webkit-scrollbar { display: none; }
   .gallery-img {
-    flex: 0 0 320px; aspect-ratio: 4/3; object-fit: cover;
+    flex: 0 0 320px; width: 320px; height: 240px;
+    object-fit: cover; object-position: center;
     border-radius: 4px; scroll-snap-align: start;
+    display: block;
   }
 
   /* ── REVIEWS ── */
