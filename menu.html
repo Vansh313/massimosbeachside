@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Massimo's Beachside Pizza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red: #C0392B; --red-dark: #922B21; --red-light: #E74C3C;
+    --cream: #FAF7F2; --warm-white: #FFFDF9;
+    --charcoal: #1C1C1C; --dark-brown: #2C1A0E;
+    --text-muted: #6B6B6B; --gold: #D4A847;
+    --border: rgba(0,0,0,0.08); --nav-h: 72px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--warm-white); color: var(--charcoal); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h);
+    background: rgba(28,28,28,0.97); backdrop-filter: blur(12px);
+    display: flex; align-items: center; padding: 0 5%;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-badge {
+    width: 44px; height: 44px; border-radius: 50%; background: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: #fff;
+  }
+  .nav-logo-text strong { display: block; color: #fff; font-size: 15px; font-family: 'Playfair Display', serif; font-weight: 700; }
+  .nav-logo-text span { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; }
+  .nav-links { display: flex; align-items: center; gap: 32px; margin: 0 auto; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta { background: var(--red); color: #fff; padding: 10px 22px; border-radius: 6px; font-size: 13px; font-weight: 600; text-decoration: none; }
+
+  /* MENU PAGE HERO */
+  .menu-hero {
+    padding-top: var(--nav-h);
+    background: var(--dark-brown);
+    padding-bottom: 0;
+    position: relative; overflow: hidden;
+  }
+  .menu-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=1400&q=60') center/cover;
+    opacity: 0.12;
+  }
+  .menu-hero-inner {
+    position: relative; z-index: 1;
+    padding: 60px 5% 56px; text-align: center;
+  }
+  .menu-hero-inner .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  }
+  .menu-hero-inner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 72px); font-weight: 900; color: #fff;
+    margin-bottom: 16px;
+  }
+  .menu-hero-inner p { font-size: 16px; color: rgba(255,255,255,0.55); }
+
+  /* STICKY CATEGORY NAV */
+  .cat-nav {
+    position: sticky; top: var(--nav-h); z-index: 50;
+    background: #fff; border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; gap: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .cat-nav::-webkit-scrollbar { display: none; }
+  .cat-nav a {
+    display: flex; align-items: center; gap: 6px;
+    padding: 18px 20px; text-decoration: none;
+    font-size: 13px; font-weight: 500; color: var(--text-muted);
+    white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .cat-nav a:hover { color: var(--charcoal); }
+  .cat-nav a.active { color: var(--red); border-bottom-color: var(--red); }
+
+  /* OFFER BANNER */
+  .offer-banner {
+    background: var(--red); padding: 18px 5%;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .offer-badge {
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 3px;
+  }
+  .offer-text { color: #fff; font-size: 14px; font-weight: 500; }
+  .offer-text strong { font-weight: 700; }
+
+  /* MENU SECTIONS */
+  .menu-body { max-width: 1100px; margin: 0 auto; padding: 60px 5%; }
+  .menu-category { margin-bottom: 72px; }
+  .cat-header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .cat-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 40px); font-weight: 700; color: var(--charcoal);
+    margin-bottom: 8px;
+  }
+  .cat-header p { font-size: 14px; color: var(--text-muted); }
+  .cat-header .cat-tag {
+    display: inline-block; margin-right: 8px; margin-bottom: 8px;
+    background: var(--cream); color: var(--text-muted);
+    font-size: 12px; font-weight: 500; padding: 4px 12px; border-radius: 20px;
+  }
+
+  .items-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+    background: var(--border);
+  }
+  .item {
+    background: #fff; padding: 24px 28px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 20px; transition: background 0.15s;
+  }
+  .item:hover { background: var(--cream); }
+  .item-info { flex: 1; }
+  .item-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: var(--charcoal); }
+  .item-info p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; color: var(--red);
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .item-popular {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--red);
+    background: rgba(192,57,43,0.08); padding: 3px 8px; border-radius: 3px;
+    display: inline-block; margin-bottom: 6px;
+  }
+
+  /* TOPPINGS BOX */
+  .toppings-box {
+    background: var(--cream); border: 1px solid var(--border);
+    border-radius: 6px; padding: 28px 32px; margin-bottom: 32px;
+  }
+  .toppings-box h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .toppings-box p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+  .toppings-list {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .topping-pill {
+    background: #fff; border: 1px solid var(--border);
+    font-size: 13px; color: var(--charcoal);
+    padding: 6px 14px; border-radius: 20px;
+  }
+
+  /* FOOTER MINI */
+  .menu-footer {
+    background: var(--charcoal); padding: 48px 5%;
+    text-align: center;
+  }
+  .menu-footer h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; color: #fff; margin-bottom: 12px;
+  }
+  .menu-footer p { font-size: 15px; color: rgba(255,255,255,0.55); margin-bottom: 28px; }
+  .btn-red {
+    display: inline-block; background: var(--red); color: #fff;
+    padding: 14px 36px; border-radius: 6px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+  }
+  .btn-red:hover { background: var(--red-light); }
+
+  @media (max-width: 600px) {
+    .nav-links, .nav-cta { display: none; }
+    .items-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-badge">M</div>
+    <div class="nav-logo-text">
+      <strong>Massimo's</strong>
+      <span>Beachside Pizza</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">Our Story</a></li>
+    <li><a href="menu.html" style="color:#fff;">Menu</a></li>
+    <li><a href="index.html#gallery">Gallery</a></li>
+    <li><a href="index.html#contact">Location</a></li>
+  </ul>
+  <a href="https://massimosbeachside.com/menu" target="_blank" class="nav-cta">Order Online</a>
+</nav>
+
+<div class="menu-hero">
+  <div class="menu-hero-inner">
+    <div class="eyebrow">Vero Beach, FL</div>
+    <h1>Our Menu</h1>
+    <p>Dough & sauce made from scratch · 100% all-natural mozzarella · Fresh daily</p>
+  </div>
+</div>
+
+<!-- OFFER -->
+<div class="offer-banner">
+  <div class="offer-badge">Limited Deal</div>
+  <p class="offer-text"><strong>Mon & Tue:</strong> 16" Cheese Pizza $12.00 — Pick-Up Only</p>
+</div>
+
+<!-- STICKY CAT NAV -->
+<nav class="cat-nav">
+  <a href="#pizzas" class="active">Pizzas</a>
+  <a href="#specialty">Specialty Pizzas</a>
+  <a href="#calzones">Calzones</a>
+  <a href="#stromboli">Stromboli</a>
+  <a href="#subs">Subs</a>
+  <a href="#salads">Salads</a>
+  <a href="#appetizers">Appetizers</a>
+  <a href="#desserts">Desserts</a>
+  <a href="#beverages">Beverages</a>
+</nav>
+
+<div class="menu-body">
+
+  <!-- PIZZAS -->
+  <div class="menu-category" id="pizzas">
+    <div class="cat-header">
+      <h2>Pizzas</h2>
+      <p>All pizzas made with scratch dough, homemade tomato sauce & 100% all-natural mozzarella.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item">
+        <div class="item-info"><div class="item-popular">Best Value</div><h3>Cheese Pizza — 14"</h3><p>Classic cheese pizza, medium size</p></div>
+        <div class="item-price">$14</div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-popular">Most Popular</div><h3>Cheese Pizza — 16"</h3><p>Classic cheese pizza, large size</p></div>
+        <div class="item-price">$16</div>
+      </div>
+      <div class="item">
+        <div class="item-info"><h3>Sicilian Cheese</h3><p>Square thick-crust Sicilian style</p></div>
+        <div class="item-price">$17</div>
+      </div>
+    </div>
+
+    <div class="toppings-box" style="margin-top:24px;">
+      <h3>Additional Toppings</h3>
+      <p>Half: $1.25 each &nbsp;|&nbsp; Full: $2.50 each</p>
+      <div class="toppings-list">
+        <span class="topping-pill">Pepperoni</span>
+        <span class="topping-pill">Sausage</span>
+        <span class="topping-pill">Mushrooms</span>
+        <span class="topping-pill">Onions</span>
+        <span class="topping-pill">Peppers</span>
+        <span class="topping-pill">Olives</span>
+        <span class="topping-pill">Canadian Bacon</span>
+        <span class="topping-pill">Ham</span>
+        <span class="topping-pill">Spinach</span>
+        <span class="topping-pill">Broccoli</span>
+        <span class="topping-pill">Jalapeños</span>
+        <span class="topping-pill">Banana Peppers</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECIALTY PIZZAS -->
+  <div class="menu-category" id="specialty">
+    <div class="cat-header">
+      <h2>Specialty Pizzas</h2>
+      <p>Medium 14" | Large 16" — each made to order with premium toppings.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><h3>White Pizza</h3><p>Ricotta, mozzarella & fresh garlic</p></div><div class="item-price">$16 / $18</div></div>
+      <div class="item"><div class="item-info"><h3>White Spinach Pizza</h3><p>Ricotta, mozzarella, spinach & fresh garlic</p></div><div class="item-price">$18 / $20</div></div>
+      <div class="item"><div class="item-info"><h3>White Broccoli Pizza</h3><p>Ricotta, mozzarella, broccoli & fresh garlic</p></div><div class="item-price">$18 / $20</div></div>
+      <div class="item"><div class="item-info"><div class="item-popular">Fan Favorite</div><h3>Meatlovers</h3><p>Pepperoni, sausage, meatballs, ham & Canadian bacon</p></div><div class="item-price">$22 / $24</div></div>
+      <div class="item"><div class="item-info"><h3>Hawaiian</h3><p>Canadian bacon, ham & pineapple</p></div><div class="item-price">$18 / $20</div></div>
+      <div class="item"><div class="item-info"><h3>Veggie</h3><p>Mushrooms, onions, peppers, tomatoes & onions</p></div><div class="item-price">$20 / $22</div></div>
+      <div class="item"><div class="item-info"><h3>Fresca</h3><p>Mozzarella, tomatoes, fresh garlic, basil & olive oil</p></div><div class="item-price">$16 / $18</div></div>
+      <div class="item"><div class="item-info"><h3>Chicken Parm Pizza</h3><p>A beachside classic — chicken parmigiana on a pizza</p></div><div class="item-price">$22 / $24</div></div>
+      <div class="item"><div class="item-info"><h3>Buffalo Chicken Pizza</h3><p>Hot, medium or mild Buffalo sauce with chicken</p></div><div class="item-price">$22 / $24</div></div>
+      <div class="item"><div class="item-info"><h3>Margherita Pizza</h3><p>Tomato sauce, fresh mozzarella & basil</p></div><div class="item-price">$18 / $20</div></div>
+      <div class="item"><div class="item-info"><h3>Prosciutto & Arugula</h3><p>Prosciutto, arugula, shaved parmesan & balsamic glaze</p></div><div class="item-price">$18 / $20</div></div>
+      <div class="item"><div class="item-info"><h3>Grandma Pizza</h3><p>Thin crispy pan pizza with tomato sauce & mozzarella</p></div><div class="item-price">$18</div></div>
+    </div>
+  </div>
+
+  <!-- CALZONES -->
+  <div class="menu-category" id="calzones">
+    <div class="cat-header">
+      <h2>Calzones</h2>
+      <p>Filled with creamy ricotta & mozzarella. Add any pizza topping for $2 each.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><div class="item-popular">Classic</div><h3>Traditional Calzone</h3><p>Ricotta & mozzarella</p></div><div class="item-price">$11</div></div>
+      <div class="item"><div class="item-info"><h3>Custom Calzone</h3><p>Start with ricotta & mozzarella, add any topping from the pizza menu</p></div><div class="item-price">$11+</div></div>
+    </div>
+  </div>
+
+  <!-- STROMBOLI -->
+  <div class="menu-category" id="stromboli">
+    <div class="cat-header">
+      <h2>Stromboli</h2>
+      <p>Rolled and baked fresh. Loaded with flavor in every bite.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><h3>Traditional Stromboli</h3><p>Pepperoni, sausage, mushrooms, onions, peppers & mozzarella</p></div><div class="item-price">$11</div></div>
+      <div class="item"><div class="item-info"><h3>Italian Stromboli</h3><p>Pepperoni, sausage, salami, ham, capicola & mozzarella</p></div><div class="item-price">$13</div></div>
+      <div class="item"><div class="item-info"><h3>Chicken Parmigiana Stromboli</h3><p>Chicken parm wrapped in fresh dough</p></div><div class="item-price">$13</div></div>
+      <div class="item"><div class="item-info"><h3>Chicken & Broccoli Stromboli</h3><p>Tender chicken with broccoli & mozzarella</p></div><div class="item-price">$13</div></div>
+    </div>
+  </div>
+
+  <!-- SUBS -->
+  <div class="menu-category" id="subs">
+    <div class="cat-header">
+      <h2>Hot Subs</h2>
+      <p>Served on fresh Italian bread, loaded with quality toppings.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><h3>Meatball Parmigiana</h3><p>Classic Italian sub with marinara & mozzarella</p></div><div class="item-price">$11</div></div>
+      <div class="item"><div class="item-info"><h3>Sausage Parmigiana</h3><p>Italian sausage with marinara & mozzarella</p></div><div class="item-price">$11</div></div>
+      <div class="item"><div class="item-info"><h3>Chicken Parmigiana</h3><p>Breaded chicken cutlet with marinara & mozzarella</p></div><div class="item-price">$12</div></div>
+      <div class="item"><div class="item-info"><h3>Italian Combo</h3><p>Ham, capicola, salami, provolone, lettuce, tomatoes, onions, banana peppers & Italian dressing</p></div><div class="item-price">$11</div></div>
+      <div class="item"><div class="item-info"><h3>Turkey & Provolone</h3><p>Lettuce, tomatoes, onions, banana peppers & Italian dressing</p></div><div class="item-price">$11</div></div>
+      <div class="item"><div class="item-info"><h3>Prosciutto & Fresh Mozzarella</h3><p>Arugula, tomatoes & balsamic glaze</p></div><div class="item-price">$12</div></div>
+    </div>
+  </div>
+
+  <!-- SALADS -->
+  <div class="menu-category" id="salads">
+    <div class="cat-header">
+      <h2>Fresh Salads</h2>
+      <p>Crisp and fresh, made to order.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><h3>House Salad</h3><p>Romaine lettuce, tomatoes, onions, olives & banana peppers</p></div><div class="item-price">$6</div></div>
+      <div class="item"><div class="item-info"><h3>Caesar Salad</h3><p>Romaine, parmesan & croutons</p></div><div class="item-price">$8</div></div>
+      <div class="item"><div class="item-info"><h3>Caesar Salad + Chicken</h3><p>Add grilled chicken</p></div><div class="item-price">$12</div></div>
+      <div class="item"><div class="item-info"><h3>Greek Salad</h3><p>Romaine, tomatoes, cucumbers, onions, olives & feta</p></div><div class="item-price">$10</div></div>
+      <div class="item"><div class="item-info"><h3>Antipasto Salad — Small</h3><p>Ham, salami, capicola & provolone on a house salad</p></div><div class="item-price">$10</div></div>
+      <div class="item"><div class="item-info"><h3>Antipasto Salad — Large</h3><p>Ham, salami, capicola & provolone on a house salad</p></div><div class="item-price">$14</div></div>
+    </div>
+  </div>
+
+  <!-- APPETIZERS -->
+  <div class="menu-category" id="appetizers">
+    <div class="cat-header">
+      <h2>Appetizers</h2>
+      <p>Perfect starters or sides with your order.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><div class="item-popular">Must Try</div><h3>Garlic Knots</h3><p>With marinara dipping sauce</p></div><div class="item-price">$5</div></div>
+      <div class="item"><div class="item-info"><h3>Garlic Knots with Mozzarella</h3><p>Extra cheesy garlic knots</p></div><div class="item-price">$7</div></div>
+      <div class="item"><div class="item-info"><h3>Side of Meatballs or Sausage</h3><p>Hearty Italian side</p></div><div class="item-price">$6</div></div>
+    </div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div class="menu-category" id="desserts">
+    <div class="cat-header">
+      <h2>Desserts</h2>
+      <p>End on a sweet note.</p>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><h3>Chocolate Mousse Cup</h3><p>Rich and creamy</p></div><div class="item-price">$5</div></div>
+      <div class="item"><div class="item-info"><h3>Cheesecake</h3><p>Classic New York style</p></div><div class="item-price">$4</div></div>
+      <div class="item"><div class="item-info"><h3>Cannoli</h3><p>Traditional Italian pastry</p></div><div class="item-price">$4</div></div>
+      <div class="item"><div class="item-info"><h3>Tiramisu Cup</h3><p>Light and airy Italian classic</p></div><div class="item-price">$5</div></div>
+      <div class="item"><div class="item-info"><h3>Limoncello Mascarpone Cake</h3><p>Bright citrus Italian cake</p></div><div class="item-price">$6</div></div>
+    </div>
+  </div>
+
+  <!-- BEVERAGES -->
+  <div class="menu-category" id="beverages">
+    <div class="cat-header">
+      <h2>Beverages</h2>
+    </div>
+    <div class="items-grid">
+      <div class="item"><div class="item-info"><h3>Bottled Soda</h3><p>Ask for available selections</p></div><div class="item-price">$3.50</div></div>
+      <div class="item"><div class="item-info"><h3>2 Liter Soda</h3></div><div class="item-price">$4</div></div>
+      <div class="item"><div class="item-info"><h3>Bottled Water</h3></div><div class="item-price">$1.50</div></div>
+      <div class="item"><div class="item-info"><h3>Sparkling Water</h3></div><div class="item-price">$2.50</div></div>
+      <div class="item"><div class="item-info"><h3>Gatorade</h3></div><div class="item-price">$3</div></div>
+    </div>
+  </div>
+
+  <p style="font-size:12px; color:var(--text-muted); margin-top:16px; line-height:1.7;">
+    * $15.00 minimum order for delivery · $2.00 delivery charge. Prices & menu items subject to change without notice. Tax not included. If you have a food allergy, please let us know when ordering. © Grande Cheese Company 11/2024.
+  </p>
+
+</div>
+
+<div class="menu-footer">
+  <h3>Ready to Order?</h3>
+  <p>Call us at (772) 492-8351 or order online for pickup or delivery.</p>
+  <a href="https://massimosbeachside.com/menu" target="_blank" class="btn-red">Order Online Now →</a>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.menu-category');
+  const navLinks = document.querySelectorAll('.cat-nav a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      const top = s.getBoundingClientRect().top;
+      if (top < 180) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
