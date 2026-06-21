@@ -369,15 +369,25 @@
   .gallery { background: var(--cream); padding: 80px 0 40px; }
   .gallery-header { padding: 0 5%; margin-bottom: 40px; }
   .gallery-scroll {
-    display: flex; gap: 16px; overflow-x: auto;
-    padding: 0 5% 20px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    display: flex; gap: 16px;
+    overflow: hidden;
+    padding: 0 0 20px;
+    width: 100%;
+  }
+
+  @keyframes gallerySlide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .gallery-track {
+    display: flex; gap: 16px;
+    animation: gallerySlide 20s linear infinite;
+    width: max-content;
   }
   .gallery-scroll::-webkit-scrollbar { display: none; }
   .gallery-img {
-    flex: 0 0 320px; width: 320px; height: 320px;
+    flex: 0 0 420px; width: 320px; height: 320px;
     object-fit: cover; object-position: center;
     border-radius: 4px; scroll-snap-align: start;
     display: block;
@@ -769,12 +779,20 @@
     <h2 class="section-title">Made Fresh Daily</h2>
   </div>
   <div class="gallery-scroll">
+   <div class="gallery-track">
     <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/b96e2af8-db79-4b91-bc28-9f9fe7507495?w=810&fit=cover" alt="Pizza at Massimo's">
     <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/8effa0e5-6a34-425a-8c64-b527aff73247?w=810&fit=cover" alt="Specialty pizza">
     <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/959cbb29-13f1-4130-8168-ce2e4c49080b?w=810&fit=cover" alt="Garlic knots">
     <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/b5289964-c4b1-4373-9444-4462e08b7882?w=810&fit=cover" alt="Fresh pizza out of the oven">
     <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/40557d23-ddf4-483b-93d6-357edb402fa1?w=810&fit=cover" alt="Pizza slice">
     <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/3197dfb6-963e-438b-8d71-ebc17c5994e4?w=810&fit=cover" alt="Italian food">
+    <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/b96e2af8-db79-4b91-bc28-9f9fe7507495?w=810&fit=cover" alt="Pizza at Massimo's">
+    <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/8effa0e5-6a34-425a-8c64-b527aff73247?w=810&fit=cover" alt="Specialty pizza">
+    <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/959cbb29-13f1-4130-8168-ce2e4c49080b?w=810&fit=cover" alt="Garlic knots">
+    <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/b5289964-c4b1-4373-9444-4462e08b7882?w=810&fit=cover" alt="Fresh pizza out of the oven">
+    <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/40557d23-ddf4-483b-93d6-357edb402fa1?w=810&fit=cover" alt="Pizza slice">
+    <img class="gallery-img" src="https://massimosbeachside.com/pluto-images/funnel/images/3197dfb6-963e-438b-8d71-ebc17c5994e4?w=810&fit=cover" alt="Italian food">
+    </div>
   </div>
 </section>
 
